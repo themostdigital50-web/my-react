@@ -9,7 +9,7 @@ function App() {
   const iProducts = [
     {'id': 101, 'name': 'Macbook','category': 'Laptop','price': 22000,'quantity': 2},
     {'id': 203,'name': 'Iphone 16','category': 'Phone','price': 32000,'quantity': 4},
-    {'id': 51,'name': 'Apple watch','category': 'Watch','price': 5000,'quantity': 5},
+    {'id': 51,'name': 'Galaxy watch','category': 'Watch','price': 5000,'quantity': 5},
     {'id': 63,'name': 'Galaxy ring','category': 'Accessory','price': 1200,'quantity': 8},
     {'id': 44,'name': 'Odyssey','category': 'Accessory','price': 12000,'quantity': 3},
     {'id': 24,'name': 'Samsung galaxy','category': 'Phone','price': 40000,'quantity': 4},
