@@ -1,0 +1,7 @@
+services:
+  web:
+    build: ./my-react-app
+    image: my-react-app
+    container_name: my-react-container
+    ports: 
+     - 8080:5173 
