@@ -3,12 +3,18 @@ import './App.css';
 
 function App() {
   const iProducts = [
-    { id: 101, name: 'Macbook', category: 'Laptop', price: 22000, quantity: 2 },
-    { id: 203, name: 'Iphone 16', category: 'Phone', price: 32000, quantity: 4 },
-    { id: 51, name: 'Galaxy watch', category: 'Watch', price: 5000, quantity: 5 },
-    { id: 63, name: 'Galaxy ring', category: 'Accessory', price: 1200, quantity: 8 },
-    { id: 44, name: 'Odyssey', category: 'Accessory', price: 12000, quantity: 3 },
-    { id: 24, name: 'Samsung galaxy', category: 'Phone', price: 40000, quantity: 4 },
+    { id: 101, name: 'Macbook', category: 'Computing', price: 22000, quantity: 2 },
+    { id: 203, name: 'Iphone 16', category: 'Phones', price: 32000, quantity: 4 },
+    { id: 51, name: 'Galaxy Watch', category: 'Wearables', price: 5000, quantity: 5 },
+    { id: 63, name: 'Galaxy Ring', category: 'Wearables', price: 1200, quantity: 8 },
+    { id: 44, name: 'Odyssey Monitor', category: 'Displays', price: 12000, quantity: 3 },
+    { id: 24, name: 'Samsung Galaxy', category: 'Phones', price: 40000, quantity: 4 },
+    { id: 72, name: 'AirPods Pro', category: 'Audio', price: 4999, quantity: 7 },
+    { id: 83, name: 'Sony WH-1000XM5', category: 'Audio', price: 7499, quantity: 1 },
+    { id: 95, name: 'PlayStation 5', category: 'Gaming', price: 10999, quantity: 6 },
+    { id: 112, name: 'Xbox Controller', category: 'Gaming', price: 1299, quantity: 10 },
+    { id: 126, name: 'Magic Keyboard', category: 'Accessories', price: 3499, quantity: 0 },
+    { id: 138, name: 'Portable SSD', category: 'Accessories', price: 2499, quantity: 9 },
   ];
 
   const [prod, setProducts] = useState(iProducts);
@@ -67,10 +73,10 @@ function App() {
     <main className="inventory">
       <header className="inventory__header">
         <div>
-          <p className="inventory__eyebrow">Stockroom</p>
-          <h1>Inventory</h1>
+          <p className="inventory__eyebrow">Welcome back</p>
+          <h1>Here is today’s inventory</h1>
         </div>
-        <p className="inventory__date">Today</p>
+        <p className="inventory__date">Stockroom · Today</p>
       </header>
 
       <section className="summary" aria-label="Inventory summary">
