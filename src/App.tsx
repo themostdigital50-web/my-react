@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 
-function App() {
-  const iProducts = [
+const iProducts = [
     { id: 101, name: 'Macbook', category: 'Computing', price: 22000, quantity: 2 },
     { id: 203, name: 'Iphone 16', category: 'Phones', price: 32000, quantity: 4 },
     { id: 51, name: 'Galaxy Watch', category: 'Wearables', price: 5000, quantity: 5 },
@@ -15,11 +14,14 @@ function App() {
     { id: 112, name: 'Xbox Controller', category: 'Gaming', price: 1299, quantity: 10 },
     { id: 126, name: 'Magic Keyboard', category: 'Accessories', price: 3499, quantity: 0 },
     { id: 138, name: 'Portable SSD', category: 'Accessories', price: 2499, quantity: 9 },
-  ];
+];
 
+function App() {
   const [prod, setProducts] = useState(iProducts);
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
+  const [sortBy, setSortBy] = useState('name');
+  const [lowStockOnly, setLowStockOnly] = useState(false);
 
   const totalQuantity = prod.reduce((acc, product) => acc + product.quantity, 0);
   const totalPrice = prod.reduce(
@@ -34,25 +36,42 @@ function App() {
       product.name.toLowerCase().includes(search.trim().toLowerCase()) ||
       product.category.toLowerCase().includes(search.trim().toLowerCase());
     const matchesCategory = category === 'All' || product.category === category;
-    return matchesSearch && matchesCategory;
+    const matchesStock = !lowStockOnly || product.quantity <= 2;
+    return matchesSearch && matchesCategory && matchesStock;
+  }).sort((a, b) => {
+    if (sortBy === 'stock-low') return a.quantity - b.quantity;
+    if (sortBy === 'stock-high') return b.quantity - a.quantity;
+    if (sortBy === 'price-low') return a.price - b.price;
+    if (sortBy === 'price-high') return b.price - a.price;
+    return a.name.localeCompare(b.name);
   });
 
+  function resetInventory() {
+    setProducts(iProducts.map((product) => ({ ...product })));
+    setSearch('');
+    setCategory('All');
+    setSortBy('name');
+    setLowStockOnly(false);
+  }
+
   function sell(id: number) {
-    setProducts((current) =>
-      current.map((product) =>
+    setProducts((current) => {
+      return current.map((product) =>
         product.id === id && product.quantity > 0
-          ? { ...product, quantity: product.quantity - 1 }
+          ? { ...product, quantity: Math.max(0, product.quantity - 1) }
           : product,
-      ),
-    );
+      );
+    });
   }
 
   function restock(id: number) {
-    setProducts((current) =>
-      current.map((product) =>
-        product.id === id ? { ...product, quantity: product.quantity + 1 } : product,
-      ),
-    );
+    setProducts((current) => {
+      return current.map((product) =>
+        product.id === id
+          ? { ...product, quantity: product.quantity + 1 }
+          : product,
+      );
+    });
   }
 
   function level(quantity: number): string {
@@ -108,6 +127,32 @@ function App() {
             placeholder="Search inventory"
           />
         </label>
+        <div className="toolbar__options">
+          <label className="sort-control">
+            <span>Sort</span>
+            <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+              <option value="name">Name</option>
+              <option value="stock-low">Stock: low first</option>
+              <option value="stock-high">Stock: high first</option>
+              <option value="price-low">Price: low first</option>
+              <option value="price-high">Price: high first</option>
+            </select>
+          </label>
+          <button
+            type="button"
+            className={lowStockOnly ? 'stock-toggle stock-toggle--active' : 'stock-toggle'}
+            onClick={() => setLowStockOnly((current) => !current)}
+            aria-pressed={lowStockOnly}
+          >
+            Low stock
+          </button>
+          <button type="button" className="reset-button" onClick={resetInventory}>
+            Reset
+          </button>
+        </div>
+      </section>
+
+      <section className="filter-row" aria-label="Filter by category">
         <div className="filters" aria-label="Filter by category">
           {categories.map((item) => (
             <button
