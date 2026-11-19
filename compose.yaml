@@ -4,4 +4,4 @@ services:
     image: my-react-app
     container_name: my-react-container
     ports:
-      - "8080:5173"
+      - "8080:80"
