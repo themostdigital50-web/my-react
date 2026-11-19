@@ -27,5 +27,8 @@ jobs:
              - name: Run build
                run: npm run build
 
+             - name: Build image
+               run: docker build -t my-react-app .
+
 
                         
